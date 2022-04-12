@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class TestSavepointBackupService extends TestRun {
 
-    @Autowired
+    @Resource
     private SavepointBackupService savepointBackupService;
 
 

@@ -5,9 +5,10 @@ import com.flink.streaming.web.model.dto.JobConfigDTO;
 import com.flink.streaming.web.service.JobAlarmConfigService;
 import com.flink.streaming.web.service.JobConfigService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhuhuipei
@@ -19,23 +20,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class JobConfigAOImpl implements JobConfigAO {
 
-    @Autowired
+    @Resource
     private JobConfigService jobConfigService;
 
-    @Autowired
+    @Resource
     private JobAlarmConfigService jobAlarmConfigService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addJobConfig(JobConfigDTO jobConfigDTO) {
         Long jobConfigId = jobConfigService.addJobConfig(jobConfigDTO);
-        jobAlarmConfigService.upSertBatchJobAlarmConfig(jobConfigDTO.getAlarmTypeEnumList(), jobConfigId);
+        jobAlarmConfigService.upsertBatchJobAlarmConfig(jobConfigDTO.getAlarmTypeEnumList(), jobConfigId);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void updateJobConfigById(JobConfigDTO jobConfigDTO) {
         jobConfigService.updateJobConfigByIdWithWriteHistory(jobConfigDTO);
-        jobAlarmConfigService.upSertBatchJobAlarmConfig(jobConfigDTO.getAlarmTypeEnumList(), jobConfigDTO.getId());
+        jobAlarmConfigService.upsertBatchJobAlarmConfig(jobConfigDTO.getAlarmTypeEnumList(), jobConfigDTO.getId());
     }
 }

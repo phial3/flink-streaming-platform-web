@@ -24,6 +24,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.Resource;
+
 /**
  * @author zhuhuipei
  * @Description:
@@ -36,7 +38,7 @@ public class YarnRestRpcAdapterImpl implements YarnRestRpcAdapter {
 
     private final String BODY_HTTP_KILL = "{\"state\":\"KILLED\"}";
 
-    @Autowired
+    @Resource
     private SystemConfigService systemConfigService;
 
     //TODO 设个方法设计不好 需要改造

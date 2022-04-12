@@ -1,5 +1,6 @@
 package com.flink.streaming.web.controller.api;
 
+import cn.hutool.core.collection.CollectionUtil;
 import com.flink.streaming.common.constant.SystemConstant;
 import com.flink.streaming.common.enums.JobTypeEnum;
 import com.flink.streaming.common.model.CheckPointParam;
@@ -8,13 +9,13 @@ import com.flink.streaming.web.ao.JobServerAO;
 import com.flink.streaming.web.common.FlinkConstants;
 import com.flink.streaming.web.common.FlinkYarnRestUriConstants;
 import com.flink.streaming.web.common.RestResult;
-import com.flink.streaming.web.enums.*;
-import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.common.util.CliConfigUtil;
 import com.flink.streaming.web.common.util.HttpServiceCheckerUtil;
 import com.flink.streaming.web.common.util.HttpUtil;
 import com.flink.streaming.web.common.util.MatcherUtils;
 import com.flink.streaming.web.controller.web.BaseController;
+import com.flink.streaming.web.enums.*;
+import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.model.dto.JobConfigDTO;
 import com.flink.streaming.web.model.dto.JobConfigHistoryDTO;
 import com.flink.streaming.web.model.dto.PageModel;
@@ -25,15 +26,17 @@ import com.flink.streaming.web.model.param.UpsertJobConfigParam;
 import com.flink.streaming.web.model.vo.DeployFlinkVO;
 import com.flink.streaming.web.model.vo.DeployFlinkVO.FlinkTask;
 import com.flink.streaming.web.model.vo.PageVO;
-import com.flink.streaming.web.service.JobAlarmConfigService;
-import com.flink.streaming.web.service.JobConfigHistoryService;
-import com.flink.streaming.web.service.JobConfigService;
-import com.flink.streaming.web.service.SavepointBackupService;
-import com.flink.streaming.web.service.SystemConfigService;
-
-import cn.hutool.core.collection.CollectionUtil;
+import com.flink.streaming.web.service.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.flink.shaded.jackson2.org.yaml.snakeyaml.Yaml;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -41,15 +44,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.flink.shaded.jackson2.org.yaml.snakeyaml.Yaml;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author zhuhuipei
@@ -62,34 +56,34 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class JobConfigApiController extends BaseController {
 
-    @Autowired
+    @Resource
     private JobServerAO jobYarnServerAO;
 
-    @Autowired
+    @Resource
     private JobServerAO jobStandaloneServerAO;
 
-    @Autowired
+    @Resource
     private JobConfigService jobConfigService;
     
-    @Autowired
+    @Resource
     private JobConfigAO jobConfigAO;
 
-    @Autowired
+    @Resource
     private JobConfigHistoryService jobConfigHistoryService;
 
-    @Autowired
+    @Resource
     private SystemConfigService systemConfigService;
 
-    @Autowired
+    @Resource
     public JobAlarmConfigService jobAlarmConfigService;
     
-    @Autowired
+    @Resource
     private SavepointBackupService savepointBackupService;
 
     @RequestMapping("/start")
     public RestResult<String> start(Long id, Long savepointId) {
         try {
-            this.getJobServerAO(id).start(id, savepointId, this.getUserName());
+           this.getJobServerAO(id).start(id, savepointId, this.getUserName());
         } catch (BizException e) {
             log.error("启动失败 id={}", id, e);
             return RestResult.error(e.getCode(), e.getErrorMsg());
@@ -285,7 +279,7 @@ public class JobConfigApiController extends BaseController {
      * 查询历史版本
      * 
      * @param modelMap
-     * @param jobConfigId
+     * @param jobConfigParam
      * @return
      * @author wxj
      * @date 2021年12月20日 上午11:07:22 
@@ -393,7 +387,7 @@ public class JobConfigApiController extends BaseController {
                 if (task.getId() == null) {
                     continue;
                 }
-                if (task.getDeployStartFlag() != null && task.getDeployStartFlag() == false) {
+                if (task.getDeployStartFlag() != null && !task.getDeployStartFlag()) {
                     continue;
                 }
                 JobConfigDTO job = jobConfigService.getJobConfigById(task.getId());
@@ -455,7 +449,7 @@ public class JobConfigApiController extends BaseController {
         }
 
         // jar需要校验参数
-        if (JobTypeEnum.JAR.equals(upsertJobConfigParam.getJobType())) {
+        if (JobTypeEnum.JAR.getCode() == upsertJobConfigParam.getJobType()) {
 
             if (StringUtils.isEmpty(upsertJobConfigParam.getCustomMainClass())) {
                 return RestResult.error("主类不能为空");
@@ -469,8 +463,8 @@ public class JobConfigApiController extends BaseController {
             }
         }
         // sql配置需要校验的参数JobType=null是兼容之前配置
-        if (JobTypeEnum.SQL_STREAMING.equals(upsertJobConfigParam.getJobType()) || upsertJobConfigParam.getJobType() == null
-                || JobTypeEnum.SQL_STREAMING.getCode() == upsertJobConfigParam.getJobType().intValue()) {
+        if (JobTypeEnum.SQL_STREAMING.getCode() == upsertJobConfigParam.getJobType()
+                || upsertJobConfigParam.getJobType() == null) {
             if (StringUtils.isEmpty(upsertJobConfigParam.getFlinkSql())) {
                 return RestResult.error("sql语句不能为空");
             }

@@ -1,18 +1,18 @@
 package com.flink.streaming.web.service.impl;
 
-import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.common.util.IpUtil;
 import com.flink.streaming.web.enums.IpStatusEnum;
 import com.flink.streaming.web.enums.SysErrorEnum;
 import com.flink.streaming.web.enums.YN;
+import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.mapper.IpStatusMapper;
 import com.flink.streaming.web.model.entity.IpStatus;
 import com.flink.streaming.web.service.IpStatusService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -25,7 +25,7 @@ import java.util.Date;
 @Slf4j
 public class IpStatusServiceImpl implements IpStatusService {
 
-    @Autowired
+    @Resource
     private IpStatusMapper ipStatusMapper;
 
     @Override

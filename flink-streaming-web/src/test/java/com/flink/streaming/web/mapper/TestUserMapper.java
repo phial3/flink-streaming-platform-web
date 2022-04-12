@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TestUserMapper extends TestRun {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     @Test

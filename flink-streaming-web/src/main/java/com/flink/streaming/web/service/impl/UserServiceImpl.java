@@ -1,13 +1,12 @@
 package com.flink.streaming.web.service.impl;
 
-import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.common.util.Base64Coded;
 import com.flink.streaming.web.common.util.Md5Utils;
 import com.flink.streaming.web.enums.SysErrorEnum;
 import com.flink.streaming.web.enums.UserStatusEnum;
 import com.flink.streaming.web.enums.YN;
+import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.mapper.UserMapper;
-import com.flink.streaming.web.model.dto.JobConfigDTO;
 import com.flink.streaming.web.model.dto.PageModel;
 import com.flink.streaming.web.model.dto.UserDTO;
 import com.flink.streaming.web.model.dto.UserSession;
@@ -16,12 +15,11 @@ import com.flink.streaming.web.model.page.PageParam;
 import com.flink.streaming.web.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -34,7 +32,7 @@ import java.util.List;
 @Slf4j
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     @Override

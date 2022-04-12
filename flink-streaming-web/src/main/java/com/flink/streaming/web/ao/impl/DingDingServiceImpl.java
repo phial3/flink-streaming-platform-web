@@ -1,17 +1,5 @@
 package com.flink.streaming.web.ao.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.nacos.api.config.annotation.NacosValue;
@@ -26,8 +14,13 @@ import com.flink.streaming.web.model.dto.JobRunLogDTO;
 import com.flink.streaming.web.service.AlartLogService;
 import com.flink.streaming.web.service.JobRunLogService;
 import com.flink.streaming.web.utils.HttpClientToolUtils;
-
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
+import java.util.*;
 
 /**
  * 
@@ -39,10 +32,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DingDingServiceImpl implements DingDingService {
     
-    @Autowired
+    @Resource
     private AlartLogService alartLogService;
 
-    @Autowired
+    @Resource
     private JobRunLogService jobRunLogService;
 
     @Override

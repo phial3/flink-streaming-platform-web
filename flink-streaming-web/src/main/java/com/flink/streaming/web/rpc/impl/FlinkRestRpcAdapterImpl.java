@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import javax.annotation.Resource;
+
 /**
  * @author zhuhuipei
  * @Description:
@@ -25,7 +27,7 @@ import org.springframework.web.client.HttpClientErrorException;
 @Slf4j
 public class FlinkRestRpcAdapterImpl implements FlinkRestRpcAdapter {
 
-    @Autowired
+    @Resource
     private SystemConfigService systemConfigService;
 
     @Override

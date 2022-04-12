@@ -13,11 +13,12 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,19 +33,19 @@ import java.util.List;
 public class JobConfigServiceImpl implements JobConfigService {
 
 
-    @Autowired
+    @Resource
     private JobConfigMapper jobConfigMapper;
 
-    @Autowired
+    @Resource
     private JobRunLogService jobRunLogService;
 
-    @Autowired
+    @Resource
     private JobAlarmConfigService jobAlarmConfigService;
 
-    @Autowired
+    @Resource
     private SystemConfigService systemConfigService;
 
-    @Autowired
+    @Resource
     private JobConfigHistoryService jobConfigHistoryService;
 
     @Override
@@ -122,10 +123,8 @@ public class JobConfigServiceImpl implements JobConfigService {
     }
 
     @Override
-    public void updateStatusByStart(Long id, String userName,
-                                    Long jobRunLogId, Integer version) {
-        int num = jobConfigMapper.updateStatusByStart(id, JobConfigStatus.STARTING.getCode(), userName,
-                jobRunLogId, version);
+    public void updateStatusByStart(Long id, String userName, Long jobRunLogId, Integer version) {
+        int num = jobConfigMapper.updateStatusByStart(id, JobConfigStatus.STARTING.getCode(), userName, jobRunLogId, version);
         if (num < 1) {
             throw new BizException("启动状态更新失败");
         }
@@ -230,10 +229,7 @@ public class JobConfigServiceImpl implements JobConfigService {
         if (status == null) {
             return Collections.emptyList();
         }
-        List<Integer> statusList = new ArrayList<>();
-        for (Integer s : status) {
-            statusList.add(s);
-        }
+        List<Integer> statusList = new ArrayList<>(Arrays.asList(status));
         return JobConfigDTO.toListDTO(jobConfigMapper.findJobConfigByStatus(statusList));
     }
 
@@ -260,7 +256,7 @@ public class JobConfigServiceImpl implements JobConfigService {
      * @time 22:43
      */
     private void checkSystemConfig(DeployModeEnum deployModeEnum) {
-        StringBuffer tips = new StringBuffer();
+        StringBuilder tips = new StringBuilder();
         String flinkHome = systemConfigService.getSystemConfigByKey(SysConfigEnum.FLINK_HOME.getKey());
         if (StringUtils.isEmpty(flinkHome)) {
             tips.append(" flinkHome、");

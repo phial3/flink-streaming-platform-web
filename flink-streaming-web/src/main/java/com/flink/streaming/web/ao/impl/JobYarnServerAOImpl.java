@@ -17,10 +17,10 @@ import com.flink.streaming.web.service.JobConfigService;
 import com.flink.streaming.web.service.SavepointBackupService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 /**
@@ -29,27 +29,26 @@ import java.util.Date;
  * @date 2020-07-20
  * @time 23:11
  */
-@Component("jobYarnServerAO")
 @Slf4j
+@Component("jobYarnServerAO")
 public class JobYarnServerAOImpl implements JobServerAO {
 
     //最大重试次数
     private static final Integer TRY_TIMES = 2;
 
-    @Autowired
+    @Resource
     private JobConfigService jobConfigService;
 
-
-    @Autowired
+    @Resource
     private YarnRestRpcAdapter yarnRestRpcAdapter;
 
-    @Autowired
+    @Resource
     private CommandRpcClinetAdapter commandRpcClinetAdapter;
 
-    @Autowired
+    @Resource
     private SavepointBackupService savepointBackupService;
 
-    @Autowired
+    @Resource
     private JobBaseServiceAO jobBaseServiceAO;
 
 

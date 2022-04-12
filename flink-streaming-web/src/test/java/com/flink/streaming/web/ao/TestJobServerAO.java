@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TestJobServerAO extends TestRun {
 
-    @Autowired
+    @Resource
     private JobServerAO jobServerAO;
 
     @Test

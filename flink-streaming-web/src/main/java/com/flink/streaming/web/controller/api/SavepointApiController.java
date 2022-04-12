@@ -1,23 +1,22 @@
 package com.flink.streaming.web.controller.api;
 
 import com.flink.streaming.web.common.RestResult;
+import com.flink.streaming.web.enums.JobConfigStatus;
+import com.flink.streaming.web.enums.SysErrorEnum;
+import com.flink.streaming.web.enums.YN;
 import com.flink.streaming.web.exceptions.BizException;
 import com.flink.streaming.web.model.dto.JobConfigDTO;
 import com.flink.streaming.web.model.dto.SavepointBackupDTO;
 import com.flink.streaming.web.model.vo.SavepointBackupVO;
-import com.flink.streaming.web.enums.JobConfigStatus;
-import com.flink.streaming.web.enums.SysErrorEnum;
-import com.flink.streaming.web.enums.YN;
 import com.flink.streaming.web.service.JobConfigService;
 import com.flink.streaming.web.service.SavepointBackupService;
 import lombok.extern.slf4j.Slf4j;
-
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -32,10 +31,10 @@ import java.util.List;
 @Slf4j
 public class SavepointApiController {
 
-    @Autowired
+    @Resource
     private SavepointBackupService savepointBackupService;
     
-    @Autowired
+    @Resource
     private JobConfigService jobConfigService;
 
     @RequestMapping(value = "/addSavepoint")

@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TestSystemConfigService extends TestRun {
 
-    @Autowired
+    @Resource
     private SystemConfigService systemConfigService;
 
 

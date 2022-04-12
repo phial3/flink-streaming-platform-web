@@ -14,6 +14,7 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ import java.util.List;
 @Log
 public class JobConfigHistoryServiceImpl implements JobConfigHistoryService {
 
-    @Autowired
+    @Resource
     private JobConfigHistoryMapper jobConfigHistoryMapper;
 
     @Override

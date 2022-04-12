@@ -3,8 +3,9 @@ package com.flink.streaming.web.controller.api;
 import com.flink.streaming.web.common.RestResult;
 import com.flink.streaming.web.common.SystemConstants;
 import com.flink.streaming.web.common.util.UserSessionUtil;
+import com.flink.streaming.web.controller.web.BaseController;
+import com.flink.streaming.web.enums.UserStatusEnum;
 import com.flink.streaming.web.exceptions.BizException;
-import com.flink.streaming.web.model.dto.JobRunLogDTO;
 import com.flink.streaming.web.model.dto.PageModel;
 import com.flink.streaming.web.model.dto.UserDTO;
 import com.flink.streaming.web.model.dto.UserSession;
@@ -12,22 +13,19 @@ import com.flink.streaming.web.model.page.PageParam;
 import com.flink.streaming.web.model.vo.Constant;
 import com.flink.streaming.web.model.vo.PageVO;
 import com.flink.streaming.web.model.vo.UserVO;
-import com.flink.streaming.web.controller.web.BaseController;
-import com.flink.streaming.web.enums.UserStatusEnum;
 import com.flink.streaming.web.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author zhuhuipei
@@ -40,7 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class UserApiController extends BaseController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
 

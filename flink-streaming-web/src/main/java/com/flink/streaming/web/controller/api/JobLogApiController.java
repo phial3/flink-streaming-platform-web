@@ -17,6 +17,8 @@ import com.flink.streaming.web.model.vo.JobRunLogVO;
 import com.flink.streaming.web.model.vo.PageVO;
 import com.flink.streaming.web.service.JobRunLogService;
 
+import javax.annotation.Resource;
+
 /**
  * 日志API
  * @author wxj
@@ -27,17 +29,16 @@ import com.flink.streaming.web.service.JobRunLogService;
 @RequestMapping("/api")
 public class JobLogApiController extends BaseController {
 
-    @Autowired
+    @Resource
     private JobRunLogService jobRunLogService;
     
-    @Autowired
+    @Resource
     private CustomConfig customConfig;
 
-    
     /**
      * 查询作业列表
      * 
-     * @param jobConfigParam
+     * @param jobRunLogParam
      * @return
      * @author wxj
      * @date 2021年12月1日 下午5:09:06 

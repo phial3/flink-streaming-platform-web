@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TestYarnRestRpcAdapter extends TestRun {
 
-    @Autowired
+    @Resource
     private YarnRestRpcAdapter yarnRestRpcAdapter;
 
 

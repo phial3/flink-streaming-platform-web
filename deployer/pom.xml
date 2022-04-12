@@ -10,7 +10,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>deployer</artifactId>
-    <version>${flink_streaming_version}</version>
 
 
     <dependencies>
@@ -80,7 +79,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <finalName>projectname</finalName>
+                    <finalName>projectName</finalName>
                     <appendAssemblyId>false</appendAssemblyId>
                     <attach>false</attach>
                 </configuration>

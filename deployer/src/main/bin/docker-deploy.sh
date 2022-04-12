@@ -18,7 +18,6 @@ start(){
          echo $pid
      if [ -z $pid ]
      then
-
          echo "开始启动进程执行命令  java $JAVA_OPTS   -jar $project --spring.profiles.active=$env"
         
           java $JAVA_OPTS   -jar $project --spring.profiles.active=$env --spring.config.additional-location=/data/projects/flink-streaming-platform-web/conf/application.properties      >/dev/null 2>&1  &

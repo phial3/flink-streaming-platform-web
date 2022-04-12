@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * @author zhuhuipei
  * @Description:
@@ -27,8 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ConfigApiController extends BaseController {
 
-
-    @Autowired
+    @Resource
     private SystemConfigService systemConfigService;
 
     @RequestMapping(value = "/upsertSynConfig", method = RequestMethod.POST)

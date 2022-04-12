@@ -14,10 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TestFlinkYarnRestRpcAdapter extends TestRun {
 
-    @Autowired
+    @Resource
     private YarnRestRpcAdapter yarnRestRpcAdapter;
 
-    @Autowired
+    @Resource
     private FlinkRestRpcAdapter flinkRestRpcAdapter;
 
 

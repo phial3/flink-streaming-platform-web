@@ -10,10 +10,10 @@ import com.flink.streaming.web.service.JobAlarmConfigService;
 import com.flink.streaming.web.service.SystemConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -26,15 +26,15 @@ import java.util.*;
 @Service
 public class JobAlarmConfigServiceImpl implements JobAlarmConfigService {
 
-    @Autowired
+    @Resource
     private JobAlarmConfigMapper jobAlarmConfigMapper;
 
-    @Autowired
+    @Resource
     private SystemConfigService systemConfigService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void upSertBatchJobAlarmConfig(List<AlarmTypeEnum> alarmTypeEnumList, Long jobId) {
+    public void upsertBatchJobAlarmConfig(List<AlarmTypeEnum> alarmTypeEnumList, Long jobId) {
         if (jobId == null) {
             throw new BizException(SysErrorEnum.JOB_CONFIG_PARAM_IS_NULL);
         }

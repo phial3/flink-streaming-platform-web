@@ -7,6 +7,8 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 /**
  * @author zhuhuipei
  * @Description:
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class ApplicationStopListener implements ApplicationListener<ContextClosedEvent> {
 
-    @Autowired
+    @Resource
     private IpStatusService ipStatusService;
 
     @Override

@@ -12,8 +12,9 @@ import com.flink.streaming.web.model.vo.CallbackDTO;
 import com.flink.streaming.web.service.AlartLogService;
 import com.flink.streaming.web.service.JobRunLogService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhuhuipei
@@ -26,18 +27,16 @@ import org.springframework.stereotype.Component;
 public class AlarmServiceAOImpl implements AlarmServiceAO {
 
 
-    @Autowired
+    @Resource
     private AlartLogService alartLogService;
 
-    @Autowired
+    @Resource
     private JobRunLogService jobRunLogService;
 
-
-    @Autowired
+    @Resource
     private DingDingAlarm dingDingAlarm;
 
-
-    @Autowired
+    @Resource
     private HttpAlarm httpAlarm;
 
     @Override

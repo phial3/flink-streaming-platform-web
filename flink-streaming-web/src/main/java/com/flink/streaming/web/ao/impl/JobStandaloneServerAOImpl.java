@@ -16,10 +16,10 @@ import com.flink.streaming.web.service.JobConfigService;
 import com.flink.streaming.web.service.SavepointBackupService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.Map;
 
@@ -29,24 +29,24 @@ import java.util.Map;
  * @date 2020-07-20
  * @time 23:11
  */
-@Component("jobStandaloneServerAO")
 @Slf4j
+@Component("jobStandaloneServerAO")
 public class JobStandaloneServerAOImpl implements JobServerAO {
 
 
-    @Autowired
+    @Resource
     private JobConfigService jobConfigService;
 
-    @Autowired
+    @Resource
     private SavepointBackupService savepointBackupService;
 
-    @Autowired
+    @Resource
     private CommandRpcClinetAdapter commandRpcClinetAdapter;
 
-    @Autowired
+    @Resource
     private FlinkRestRpcAdapter flinkRestRpcAdapter;
 
-    @Autowired
+    @Resource
     private JobBaseServiceAO jobBaseServiceAO;
 
     @Override
@@ -57,8 +57,7 @@ public class JobStandaloneServerAOImpl implements JobServerAO {
         
         if (StringUtils.isNotBlank(jobConfigDTO.getJobId())) {
             JobStandaloneInfo jobstatus = flinkRestRpcAdapter.getJobInfoForStandaloneByAppId(jobConfigDTO.getJobId(), jobConfigDTO.getDeployModeEnum());
-            if (!("CANCELED".equals(jobstatus.getState()) || "FAILED".equals(jobstatus.getState())) 
-                    && StringUtils.isNotBlank(jobstatus.getState())) {
+            if (!("CANCELED".equals(jobstatus.getState()) || "FAILED".equals(jobstatus.getState())) && StringUtils.isNotBlank(jobstatus.getState())) {
                 throw new BizException("请检查Flink任务列表，任务ID=[" + jobConfigDTO.getJobId() + "]处于[ "+jobstatus.getState()+"]状态，不能重复启动任务！") ; 
             }
         }

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class TestAlartLogService extends TestRun {
 
-    @Autowired
+    @Resource
     private AlartLogService alartLogService;
 
     @Test

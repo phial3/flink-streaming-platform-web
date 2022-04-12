@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class TestUserService extends TestRun {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     @Test

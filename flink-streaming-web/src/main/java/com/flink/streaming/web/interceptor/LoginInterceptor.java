@@ -6,13 +6,12 @@ import com.flink.streaming.web.model.dto.UserSession;
 import com.flink.streaming.web.model.vo.Constant;
 import com.flink.streaming.web.service.UserService;
 import com.flink.streaming.web.utils.WebUtil;
-
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
 
 
-    @Autowired
+    @Resource
     private UserService userService;
 
 

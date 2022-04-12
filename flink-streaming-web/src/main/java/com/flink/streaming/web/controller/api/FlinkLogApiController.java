@@ -5,10 +5,10 @@ import com.flink.streaming.web.common.util.LinuxInfoUtil;
 import com.flink.streaming.web.enums.SysConfigEnum;
 import com.flink.streaming.web.service.SystemConfigService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
@@ -23,7 +23,7 @@ import java.io.*;
 @Slf4j
 public class FlinkLogApiController {
 
-    @Autowired
+    @Resource
     public SystemConfigService systemConfigService;
 
     @RequestMapping(value = "/getFlinkLocalJobLog")

@@ -10,8 +10,9 @@ import com.flink.streaming.web.service.AlartLogService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhuhuipei
@@ -24,7 +25,7 @@ import org.springframework.stereotype.Service;
 public class AlartLogServiceImpl implements AlartLogService {
 
 
-    @Autowired
+    @Resource
     private AlarmLogMapper alarmLogMapper;
 
     @Override

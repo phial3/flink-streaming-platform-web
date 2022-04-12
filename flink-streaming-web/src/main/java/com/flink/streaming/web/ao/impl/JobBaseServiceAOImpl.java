@@ -1,7 +1,6 @@
 package com.flink.streaming.web.ao.impl;
 
 import cn.hutool.core.date.DateUtil;
-
 import com.alibaba.nacos.api.annotation.NacosInjected;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.config.annotation.NacosValue;
@@ -29,9 +28,9 @@ import com.flink.streaming.web.service.JobRunLogService;
 import com.flink.streaming.web.service.SystemConfigService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.StringReader;
 import java.util.Date;
 import java.util.Map;
@@ -52,24 +51,23 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
 
     public static final ThreadLocal<String> threadAppId = new ThreadLocal<String>();
 
-    @Autowired
+    @Resource
     private JobRunLogService jobRunLogService;
 
-
-    @Autowired
+    @Resource
     private YarnRestRpcAdapter yarnRestRpcAdapter;
 
-    @Autowired
+    @Resource
     private SystemConfigService systemConfigService;
 
-    @Autowired
+    @Resource
     private CommandRpcClinetAdapter commandRpcClinetAdapter;
 
 
-    @Autowired
+    @Resource
     private JobConfigService jobConfigService;
 
-    @Autowired
+    @Resource
     private FlinkRestRpcAdapter flinkRestRpcAdapter;
 
     @NacosInjected

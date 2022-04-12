@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class TestJobConfigService extends TestRun {
 
-    @Autowired
+    @Resource
     private JobConfigService jobConfigService;
 
 

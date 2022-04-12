@@ -4,9 +4,9 @@ import com.flink.streaming.web.mapper.SavepointBackupMapper;
 import com.flink.streaming.web.model.dto.SavepointBackupDTO;
 import com.flink.streaming.web.model.entity.SavepointBackup;
 import com.flink.streaming.web.service.SavepointBackupService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public class SavepointBackupServiceImpl implements SavepointBackupService {
 
-    @Autowired
+    @Resource
     private SavepointBackupMapper savepointBackupMapper;
 
     @Override

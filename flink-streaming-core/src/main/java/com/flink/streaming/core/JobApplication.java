@@ -80,8 +80,6 @@ public class JobApplication {
             }
             JobID jobID = tableResult.getJobClient().get().getJobID();
 
-            System.out.println(SystemConstant.QUERY_JOBID_KEY_WORD + jobID);
-
             log.info(SystemConstant.QUERY_JOBID_KEY_WORD + "{}", jobID);
 
         } catch (Exception e) {

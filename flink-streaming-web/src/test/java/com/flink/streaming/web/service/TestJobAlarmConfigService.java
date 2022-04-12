@@ -5,8 +5,8 @@ import com.flink.streaming.web.enums.AlarmTypeEnum;
 import org.apache.commons.compress.utils.Lists;
 import org.junit.Assert;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class TestJobAlarmConfigService extends TestRun {
 
-    @Autowired
+    @Resource
     public JobAlarmConfigService jobAlarmConfigService;
 
     @Test
@@ -28,7 +28,7 @@ public class TestJobAlarmConfigService extends TestRun {
         alarmTypeEnumList.add(AlarmTypeEnum.DINGDING);
         alarmTypeEnumList.add(AlarmTypeEnum.CALLBACK_URL);
 
-        jobAlarmConfigService.upSertBatchJobAlarmConfig(alarmTypeEnumList, 1L);
+        jobAlarmConfigService.upsertBatchJobAlarmConfig(alarmTypeEnumList, 1L);
     }
 
 
