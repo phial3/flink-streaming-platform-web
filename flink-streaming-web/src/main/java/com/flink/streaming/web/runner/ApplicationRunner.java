@@ -31,6 +31,4 @@ public class ApplicationRunner implements org.springframework.boot.ApplicationRu
     public void run(ApplicationArguments args) throws Exception {
         ipStatusService.registerIp();
     }
-
-
 }

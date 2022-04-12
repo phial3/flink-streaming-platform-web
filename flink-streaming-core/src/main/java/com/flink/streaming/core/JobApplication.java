@@ -55,24 +55,17 @@ public class JobApplication {
             if (jobRunParam.getJobTypeEnum() != null && JobTypeEnum.SQL_BATCH.equals(jobRunParam.getJobTypeEnum())) {
                 log.info("[SQL_BATCH]本次任务是批任务");
                 //批处理
-                settings = EnvironmentSettings.newInstance()
-                        .useBlinkPlanner()
-                        .inBatchMode()
-                        .build();
+                settings = EnvironmentSettings.newInstance().useBlinkPlanner().inBatchMode().build();
                 tEnv = TableEnvironment.create(settings);
             } else {
                 log.info("[SQL_STREAMING]本次任务是流任务");
                 //默认是流 流处理 目的是兼容之前版本
                 StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-                settings = EnvironmentSettings.newInstance()
-                        .useBlinkPlanner()
-                        .inStreamingMode()
-                        .build();
+                settings = EnvironmentSettings.newInstance().useBlinkPlanner().inStreamingMode().build();
                 tEnv = StreamTableEnvironment.create(env, settings);
                 //设置checkPoint
                 FsCheckPoint.setCheckpoint(env, jobRunParam.getCheckPointParam());
-
             }
 
             StatementSet statementSet = tEnv.createStatementSet();
@@ -95,8 +88,6 @@ public class JobApplication {
             System.err.println("任务执行失败:" + e.getMessage());
             log.error("任务执行失败：", e);
         }
-
-
     }
 
 

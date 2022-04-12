@@ -17,7 +17,9 @@
         id, ip, status, last_time, is_deleted, create_time, edit_time, creator, editor
     </sql>
 
-    <insert id="insert" parameterType="com.flink.streaming.web.model.entity.IpStatus">
+    <insert id="insert" parameterType="com.flink.streaming.web.model.entity.IpStatus">-- noinspection
+        SqlDialectInspectionForFile
+
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -74,7 +76,5 @@
         </set>
         where ip = #{ip,jdbcType=VARCHAR}
     </update>
-
-
 
 </mapper>

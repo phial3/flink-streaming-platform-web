@@ -55,7 +55,7 @@
                 <exclude>net.*:*</exclude>
                 <exclude>ch.*:*</exclude>
                 <exclude>jakarta.*:*</exclude>
-                <exclude>com.streaming.platform.web:flink-streaming-commom</exclude>
+                <exclude>com.streaming.platform.web:flink-streaming-common</exclude>
                 <exclude>com.streaming.platform.web:flink-streaming-validation</exclude>
 
                 <exclude>com.alibaba.*:*</exclude>
@@ -106,7 +106,6 @@
 
                 <exclude>com.jamesmurty.*:*</exclude>
 
-
                 <exclude>commons-digester:commons-digester:*</exclude>
                 <exclude>javax.inject:javax.inject:*</exclude>
                 <exclude>aopalliance:aopalliance:*</exclude>
@@ -119,7 +118,7 @@
                 <exclude>com.sun.*:*:*</exclude>
                 <exclude>javax.*:*:*</exclude>
 
-                <exclude>com.streaming.platform.web:flink-streaming-commom</exclude>
+                <exclude>com.streaming.platform.web:flink-streaming-common</exclude>
                 <exclude>com.streaming.platform.web:flink-streaming-web-config</exclude>
                 <exclude>com.streaming.platform.web:flink-streaming-web-alarm</exclude>
                 <exclude>com.streaming.platform.web:flink-streaming-web-common</exclude>

@@ -22,7 +22,7 @@ public class Test {
         ClassLoader threadClassLoader = Thread.currentThread().getContextClassLoader();
         System.out.println(threadClassLoader);
 
-        List<String> sql = Files.readAllLines(Paths.get("D:\\ideaprojects\\flink-test\\src\\main\\resources\\online.sql"));
+        List<String> sql = Files.readAllLines(Paths.get("online.sql"));
         List<SqlCommandCall> sqlCommandCallList = SqlFileParser.fileToSql(sql);
         for (SqlCommandCall sqlCommandCall : sqlCommandCallList) {
             LogPrint.logPrint(sqlCommandCall);

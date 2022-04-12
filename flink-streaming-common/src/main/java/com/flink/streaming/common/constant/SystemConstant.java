@@ -23,13 +23,11 @@ public class SystemConstant {
     public static final int DEFAULT_PATTERN_FLAGS = Pattern.CASE_INSENSITIVE | Pattern.DOTALL;
 
 
-    public final static String JARVERSION = "lib/flink-streaming-core-1.4.0.RELEASE.jar";
+    public final static String JARVERSION = "flink-streaming-core/target/flink-streaming-core.jar";
 
 
     public static final String QUERY_JOBID_KEY_WORD = "job-submitted-success:";
 
     public static final String QUERY_JOBID_KEY_WORD_BACKUP = "Job has been submitted with JobID";
-
-
 
 }

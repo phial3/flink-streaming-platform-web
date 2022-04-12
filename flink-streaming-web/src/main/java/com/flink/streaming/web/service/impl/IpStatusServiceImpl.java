@@ -65,7 +65,6 @@ public class IpStatusServiceImpl implements IpStatusService {
 
     @Override
     public boolean isLeader() {
-
         try {
             String ip = IpUtil.getInstance().getLocalIP();
             if (StringUtils.isEmpty(ip)) {

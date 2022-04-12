@@ -3,19 +3,19 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>flink-streaming-platform-web</artifactId>
         <groupId>com.streaming.platform.web</groupId>
+        <artifactId>streaming-platform-parent</artifactId>
         <version>1.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
+    <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>flink-streaming-validation</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.streaming.platform.web</groupId>
-            <artifactId>flink-streaming-commom</artifactId>
+            <artifactId>flink-streaming-common</artifactId>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -34,7 +34,7 @@
             <version>${flink.version}</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>flink-table-api-scala_2.11</artifactId>
+                    <artifactId>flink-table-api-scala_${scala.binary.version}</artifactId>
                     <groupId>org.apache.flink</groupId>
                 </exclusion>
                 <exclusion>

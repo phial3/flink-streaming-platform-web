@@ -22,4 +22,4 @@ jobs:
 
       # Run the tests.
       - name: Run unit-tests
-        run: mvn -pl flink-streaming-commom,flink-streaming-validation,flink-streaming-web-common,flink-streaming-core,flink-streaming-web-common,flink-streaming-web-config test
+        run: mvn -pl flink-streaming-common,flink-streaming-validation,flink-streaming-web-common,flink-streaming-core,flink-streaming-web-common,flink-streaming-web-config test

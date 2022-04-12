@@ -25,10 +25,8 @@ import org.springframework.stereotype.Component;
 @EnableAsync
 public class SchedulerTask {
 
-
     @Autowired
     private IpStatusService ipStatusService;
-
 
     @Autowired
     private TaskServiceAO taskServiceAO;

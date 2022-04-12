@@ -4,8 +4,8 @@ import com.flink.streaming.web.exceptions.BizException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.net.*;
+import java.util.Enumeration;
 
 /**
  * @author zhuhuipei
@@ -21,7 +21,7 @@ public class IpUtil {
     private static IpUtil ipUtil = new IpUtil();
 
     private IpUtil() {
-        ip = getIp();
+        ip = getCurrentSystemIp();
     }
 
     public static IpUtil getInstance() {
@@ -34,27 +34,31 @@ public class IpUtil {
      */
     public String getLocalIP() {
         if (StringUtils.isEmpty(ip)) {
-            return getIp();
+            return getCurrentSystemIp();
         }
         return ip;
     }
 
-    private String getIp() {
-        InetAddress addr = null;
+    /**
+     * @description 获取系统环境ip
+     */
+    private String getCurrentSystemIp() {
         try {
-            addr = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            return "UnknownHost";
-        }
-        byte[] ipAddr = addr.getAddress();
-        String ipAddrStr = "";
-        for (int i = 0; i < ipAddr.length; i++) {
-            if (i > 0) {
-                ipAddrStr += ".";
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface ni = networkInterfaces.nextElement();
+                Enumeration<InetAddress> niAs = ni.getInetAddresses();
+                while (niAs.hasMoreElements()) {
+                    InetAddress ia = niAs.nextElement();
+                    if (!ia.isLinkLocalAddress() && !ia.isLoopbackAddress() && ia instanceof Inet4Address) {
+                        return ia.toString().substring(1);
+                    }
+                }
             }
-            ipAddrStr += ipAddr[i] & 0xFF;
+        } catch (SocketException e) {
+            log.error("Failed to get current system Ip ", e);
         }
-        return ipAddrStr;
+        return null;
     }
 
     public static String getHostName() {

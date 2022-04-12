@@ -3,26 +3,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>flink-streaming-platform-web</artifactId>
         <groupId>com.streaming.platform.web</groupId>
+        <artifactId>streaming-platform-parent</artifactId>
         <version>1.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.streaming.platform.web</groupId>
     <artifactId>flink-streaming-web</artifactId>
-    <version>1.4.0.RELEASE</version>
+    <packaging>jar</packaging>
 
 	<properties>
-		<nacos.config.version>0.2.7</nacos.config.version>
+		<nacos.config.version>0.2.10</nacos.config.version>
+        <mybatis.spring-boot.version>2.1.1</mybatis.spring-boot.version>
+        <pagehelper.spring-boot.version>1.2.13</pagehelper.spring-boot.version>
+        <druid.spring-boot.version>1.1.10</druid.spring-boot.version>
 	</properties>
 
     <dependencies>
-		<dependency>
-		    <groupId>com.alibaba.boot</groupId>
-		    <artifactId>nacos-config-spring-boot-starter</artifactId>
-		    <version>${nacos.config.version}</version>
-		</dependency>
         <dependency>
             <groupId>com.streaming.platform.web</groupId>
             <artifactId>flink-streaming-web-config</artifactId>
@@ -73,21 +69,27 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.1.1</version>
+            <version>${mybatis.spring-boot.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.13</version>
+            <version>${pagehelper.spring-boot.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
+            <version>${druid.spring-boot.version}</version>
         </dependency>
         <!-- springboot 全家桶 end -->
+
+        <dependency>
+            <groupId>com.alibaba.boot</groupId>
+            <artifactId>nacos-config-spring-boot-starter</artifactId>
+            <version>${nacos.config.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -132,13 +134,11 @@
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>
-			<version>4.5.2</version>
 		</dependency>
 		
 		<dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpmime</artifactId>
-            <version>4.5.2</version>
         </dependency>
 
         <dependency>
@@ -155,7 +155,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.2.8.RELEASE</version>
                 <configuration>
                     <mainClass>com.flink.streaming.web.StartApplication</mainClass>
                 </configuration>

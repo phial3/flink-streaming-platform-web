@@ -1,6 +1,5 @@
 package com.flink.streaming.core.checkpoint;
 
-
 import com.flink.streaming.common.constant.SystemConstant;
 import com.flink.streaming.common.enums.CheckPointParameterEnums;
 import com.flink.streaming.common.enums.StateBackendEnum;
@@ -33,11 +32,9 @@ public class CheckPointParams {
         if (StringUtils.isEmpty(checkpointDir)) {
             return null;
         }
-        String checkpointingMode = parameterTool.get(CheckPointParameterEnums.checkpointingMode.name(),
-                CheckpointingMode.EXACTLY_ONCE.name());
+        String checkpointingMode = parameterTool.get(CheckPointParameterEnums.checkpointingMode.name(), CheckpointingMode.EXACTLY_ONCE.name());
 
-        String checkpointInterval = parameterTool.get(CheckPointParameterEnums.checkpointInterval.name(),
-                SystemConstant.SPACE);
+        String checkpointInterval = parameterTool.get(CheckPointParameterEnums.checkpointInterval.name(), SystemConstant.SPACE);
 
         String checkpointTimeout = parameterTool.get(CheckPointParameterEnums.checkpointTimeout.name(), SystemConstant.SPACE);
 
@@ -46,8 +43,7 @@ public class CheckPointParams {
 
         String asynchronousSnapshots = parameterTool.get(CheckPointParameterEnums.asynchronousSnapshots.name(), SystemConstant.SPACE);
 
-        String externalizedCheckpointCleanup =
-                parameterTool.get(CheckPointParameterEnums.externalizedCheckpointCleanup.name(), SystemConstant.SPACE);
+        String externalizedCheckpointCleanup = parameterTool.get(CheckPointParameterEnums.externalizedCheckpointCleanup.name(), SystemConstant.SPACE);
 
         String stateBackendType = parameterTool.get(CheckPointParameterEnums.stateBackendType.name(), SystemConstant.SPACE);
 
@@ -82,7 +78,6 @@ public class CheckPointParams {
         log.info("checkPointParam={}", checkPointParam);
         System.out.println("checkPointParam=" + checkPointParam);
         return checkPointParam;
-
     }
 
 }
