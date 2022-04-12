@@ -5,6 +5,7 @@ import com.flink.streaming.web.model.dto.SavepointBackupDTO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 

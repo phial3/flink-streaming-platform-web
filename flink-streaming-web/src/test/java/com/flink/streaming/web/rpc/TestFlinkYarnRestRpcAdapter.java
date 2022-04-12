@@ -4,7 +4,8 @@ import com.flink.streaming.web.base.TestRun;
 import com.flink.streaming.web.enums.DeployModeEnum;
 import com.flink.streaming.web.rpc.model.JobInfo;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhuhuipei

@@ -31,8 +31,7 @@ import java.util.Map;
  */
 @Slf4j
 @Component("jobStandaloneServerAO")
-public class JobStandaloneServerAOImpl implements JobServerAO {
-
+public class JobStandaloneServerAOImpl extends AbstractJobServerAO {
 
     @Resource
     private JobConfigService jobConfigService;

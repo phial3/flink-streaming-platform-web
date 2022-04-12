@@ -92,7 +92,7 @@ public class JacksonUtil {
      * @date 2017年1月11日 下午4:35:50
      * @version V1.0
      */
-    public static <T> Object parse(String json, Class<T> clazz) {
+    public static <T> T parse(String json, Class<T> clazz) {
         if (StringUtils.isBlank(json)) {
             return null;
         }

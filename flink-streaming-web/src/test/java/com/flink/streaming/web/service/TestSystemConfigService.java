@@ -3,6 +3,8 @@ package com.flink.streaming.web.service;
 import com.flink.streaming.web.base.TestRun;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
+
 /**
  * @author zhuhuipei
  * @Description:

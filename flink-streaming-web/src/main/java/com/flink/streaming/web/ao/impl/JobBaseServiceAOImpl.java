@@ -35,6 +35,9 @@ import java.io.StringReader;
 import java.util.Date;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -166,7 +169,7 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
     @Override
     public JobRunParamDTO writeSqlToFile(JobConfigDTO jobConfigDTO) {
         if (configService != null && StringUtils.isNotEmpty(nacosConfigDataId)
-            && StringUtils.isNotEmpty(nacosConfigGroup)) {
+                && StringUtils.isNotEmpty(nacosConfigGroup)) {
             replaceNacosParameters(jobConfigDTO);
         }
         Map<String, String> systemConfigMap = SystemConfigDTO.toMap(systemConfigService.getSystemConfig(SysConfigEnumType.SYS));
@@ -179,14 +182,13 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
     }
 
     @Override
-    public void aSyncExecJob(JobRunParamDTO jobRunParamDTO, JobConfigDTO jobConfigDTO,
-                             Long jobRunLogId, String savepointPath) {
-        if (configService != null && StringUtils.isNotEmpty(nacosConfigDataId)
-            && StringUtils.isNotEmpty(nacosConfigGroup)) {
+    public void aSyncExecJob(JobRunParamDTO jobRunParamDTO, JobConfigDTO jobConfigDTO, Long jobRunLogId, String savepointPath) {
+        if (configService != null && StringUtils.isNotEmpty(nacosConfigDataId) && StringUtils.isNotEmpty(nacosConfigGroup)) {
             replaceNacosParameters(jobConfigDTO);
         }
+
         ThreadPoolExecutor threadPoolExecutor = JobThreadPool.getInstance().getThreadPoolExecutor();
-        threadPoolExecutor.execute(new Runnable() {
+        threadPoolExecutor.submit(new Runnable() {
             @Override
             public void run() {
                 String jobStatus = JobStatusEnum.SUCCESS.name();
@@ -197,9 +199,9 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
                         .append("开始提交任务：")
                         .append(DateUtil.now()).append(SystemConstant.LINE_FEED)
                         .append("三方jar: ").append(SystemConstant.LINE_FEED);
-                         if(jobConfigDTO.getExtJarPath()!=null){
-                             localLog.append(jobConfigDTO.getExtJarPath());
-                         }
+                if (jobConfigDTO.getExtJarPath() != null) {
+                    localLog.append(jobConfigDTO.getExtJarPath());
+                }
 
                 localLog.append(SystemConstant.LINE_FEED)
                         .append("客户端IP：").append(IpUtil.getInstance().getLocalIP())
@@ -301,40 +303,41 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
             private void updateStatusAndLog(JobConfigDTO jobConfig, Long jobRunLogId,
                                             String jobStatus, String localLog, String appId) {
                 try {
-                    JobConfigDTO jobConfigDTO = new JobConfigDTO();
-                    jobConfigDTO.setId(jobConfig.getId());
-                    jobConfigDTO.setJobId(appId);
-                    JobRunLogDTO jobRunLogDTO = new JobRunLogDTO();
-                    jobRunLogDTO.setId(jobRunLogId);
-                    jobRunLogDTO.setJobId(appId);
+                    JobConfigDTO confDto = new JobConfigDTO();
+                    confDto.setId(jobConfig.getId());
+                    confDto.setJobId(appId);
+
+                    JobRunLogDTO runDto = new JobRunLogDTO();
+                    runDto.setId(jobRunLogId);
+                    runDto.setJobId(appId);
                     if (JobStatusEnum.SUCCESS.name().equals(jobStatus) && !StringUtils.isEmpty(appId)) {
 
                         //批任务提交完成后算成功
                         if (JobTypeEnum.SQL_BATCH.equals(jobConfig.getJobTypeEnum())) {
-                            jobConfigDTO.setStatus(JobConfigStatus.SUCCESS);
+                            confDto.setStatus(JobConfigStatus.SUCCESS);
                         } else {
-                            jobConfigDTO.setStatus(JobConfigStatus.RUN);
+                            confDto.setStatus(JobConfigStatus.RUN);
                         }
 
-                        jobConfigDTO.setLastStartTime(new Date());
+                        confDto.setLastStartTime(new Date());
                         if (DeployModeEnum.LOCAL.equals(jobConfig.getDeployModeEnum()) ||
                                 DeployModeEnum.STANDALONE.equals(jobConfig.getDeployModeEnum())) {
-                            jobRunLogDTO.setRemoteLogUrl(systemConfigService.getFlinkHttpAddress(jobConfig.getDeployModeEnum())
-                                    + SystemConstants.HTTP_STANDALONE_APPS + jobConfigDTO.getJobId());
+                            runDto.setRemoteLogUrl(systemConfigService.getFlinkHttpAddress(jobConfig.getDeployModeEnum())
+                                    + SystemConstants.HTTP_STANDALONE_APPS + jobConfig.getJobId());
                         }
                         if (DeployModeEnum.YARN_PER.equals(jobConfig.getDeployModeEnum())) {
-                            jobRunLogDTO.setRemoteLogUrl(systemConfigService.getYarnRmHttpAddress()
-                                    + SystemConstants.HTTP_YARN_CLUSTER_APPS + jobConfigDTO.getJobId());
+                            runDto.setRemoteLogUrl(systemConfigService.getYarnRmHttpAddress()
+                                    + SystemConstants.HTTP_YARN_CLUSTER_APPS + jobConfig.getJobId());
                         }
 
                     } else {
-                        jobConfigDTO.setStatus(JobConfigStatus.FAIL);
+                        confDto.setStatus(JobConfigStatus.FAIL);
                     }
-                    jobConfigService.updateJobConfigById(jobConfigDTO);
+                    jobConfigService.updateJobConfigById(confDto);
 
-                    jobRunLogDTO.setJobStatus(jobStatus);
-                    jobRunLogDTO.setLocalLog(localLog);
-                    jobRunLogService.updateJobRunLogById(jobRunLogDTO);
+                    runDto.setJobStatus(jobStatus);
+                    runDto.setLocalLog(localLog);
+                    jobRunLogService.updateJobRunLogById(runDto);
 
                     //最后更新一次日志 (更新日志和更新信息分开 防止日志更新失败导致相关状态更新也失败)
                     jobRunLogService.updateLogById(localLog, jobRunLogId);
@@ -343,20 +346,18 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
                 }
             }
 
-            private String submitJobForStandalone(String command, JobConfigDTO jobConfig, StringBuilder localLog)
-                    throws Exception {
+            private String submitJobForStandalone(String command, JobConfigDTO jobConfig, StringBuilder localLog) throws Exception {
                 String appId = commandRpcClinetAdapter.submitJob(command, localLog, jobRunLogId, jobConfig.getDeployModeEnum());
-                JobStandaloneInfo jobStandaloneInfo = flinkRestRpcAdapter.getJobInfoForStandaloneByAppId(appId,
-                        jobConfig.getDeployModeEnum());
+                JobStandaloneInfo jobStandaloneInfo = flinkRestRpcAdapter.getJobInfoForStandaloneByAppId(appId, jobConfig.getDeployModeEnum());
 
                 if (jobStandaloneInfo == null || StringUtils.isNotEmpty(jobStandaloneInfo.getErrors())) {
                     log.error("[submitJobForStandalone] is error jobStandaloneInfo={}", jobStandaloneInfo);
-                    localLog.append("\n 任务失败 appId=" + appId);
+                    localLog.append("\n 任务失败 appId=").append(appId);
                     throw new BizException("任务失败");
                 } else {
                     if (!SystemConstants.STATUS_RUNNING.equals(jobStandaloneInfo.getState())
-                        && !SystemConstants.STATUS_FINISHED.equals(jobStandaloneInfo.getState())) {
-                        localLog.append("\n 任务失败 appId=" + appId).append("状态是：" + jobStandaloneInfo.getState());
+                            && !SystemConstants.STATUS_FINISHED.equals(jobStandaloneInfo.getState())) {
+                        localLog.append("\n 任务失败 appId=").append(appId).append("状态是：").append(jobStandaloneInfo.getState());
                         throw new BizException("[submitJobForStandalone]任务失败");
                     }
                 }
@@ -369,7 +370,6 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
                 return yarnRestRpcAdapter.getAppIdByYarn(jobConfigDTO.getJobName(),
                         YarnUtil.getQueueName(jobConfigDTO.getFlinkRunConfig()));
             }
-
         });
     }
 
@@ -451,7 +451,7 @@ public class JobBaseServiceAOImpl implements JobBaseServiceAO {
         while (m.find()) {
             String param = m.group();
             String key = param.substring(2, param.length() - 1);
-            String value = (String)properties.get(key);
+            String value = (String) properties.get(key);
             if (value != null) {
                 text = text.replace(param, value);
             }

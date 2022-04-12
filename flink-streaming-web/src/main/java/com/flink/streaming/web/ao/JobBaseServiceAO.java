@@ -62,9 +62,9 @@ public interface JobBaseServiceAO {
      * @author zhuhuipei
      * @date 2021/3/28
      * @time 10:55
+     * @return String
      */
-    void aSyncExecJob(final JobRunParamDTO jobRunParamDTO, final JobConfigDTO jobConfig,
-                      final Long jobRunLogId, final String savepointPath);
+    void aSyncExecJob(final JobRunParamDTO jobRunParamDTO, final JobConfigDTO jobConfig, final Long jobRunLogId, final String savepointPath);
 
 
 }

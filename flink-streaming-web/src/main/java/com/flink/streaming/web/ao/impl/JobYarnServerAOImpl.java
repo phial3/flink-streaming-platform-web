@@ -31,7 +31,7 @@ import java.util.Date;
  */
 @Slf4j
 @Component("jobYarnServerAO")
-public class JobYarnServerAOImpl implements JobServerAO {
+public class JobYarnServerAOImpl extends AbstractJobServerAO {
 
     //最大重试次数
     private static final Integer TRY_TIMES = 2;
@@ -110,7 +110,7 @@ public class JobYarnServerAOImpl implements JobServerAO {
     public void savepoint(Long id) {
         JobConfigDTO jobConfigDTO = jobConfigService.getJobConfigById(id);
 
-       jobBaseServiceAO.checkSavepoint(jobConfigDTO);
+        jobBaseServiceAO.checkSavepoint(jobConfigDTO);
 
         JobInfo jobInfo = yarnRestRpcAdapter.getJobInfoForPerYarnByAppId(jobConfigDTO.getJobId());
         if (jobInfo == null) {

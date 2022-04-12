@@ -21,10 +21,8 @@ public class BaseController {
      * @return HttpServletRequest对象.
      */
     protected HttpServletRequest getServletRequest() {
-
         ServletRequestAttributes attrs = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attrs.getRequest();
-        return request;
+        return attrs.getRequest();
     }
 
 

@@ -18,8 +18,7 @@ public interface CommandRpcClinetAdapter {
      * @date 2021/3/26
      * @time 17:31
      */
-    String submitJob(String command, StringBuilder localLog, Long jobRunLogId, DeployModeEnum deployModeEnum)
-            throws Exception;
+    String submitJob(String command, StringBuilder localLog, Long jobRunLogId, DeployModeEnum deployModeEnum) throws Exception;
 
 
     /**

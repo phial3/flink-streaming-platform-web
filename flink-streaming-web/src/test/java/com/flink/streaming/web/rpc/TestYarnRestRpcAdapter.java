@@ -5,6 +5,8 @@ import com.flink.streaming.web.enums.YarnStateEnum;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
+
 /**
  * @author zhuhuipei
  * @Description:
@@ -15,7 +17,6 @@ public class TestYarnRestRpcAdapter extends TestRun {
 
     @Resource
     private YarnRestRpcAdapter yarnRestRpcAdapter;
-
 
     @Test
     public void getAppId() {

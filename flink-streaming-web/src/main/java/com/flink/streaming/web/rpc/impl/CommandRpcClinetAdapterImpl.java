@@ -51,8 +51,7 @@ public class CommandRpcClinetAdapterImpl implements CommandRpcClinetAdapter {
         Process pcs = Runtime.getRuntime().exec(command);
 
         //清理错误日志
-        this.clearLogStream(pcs.getErrorStream(), String.format("%s#startForLocal-error#%s", DateUtil.now(),
-            deployModeEnum.name()));
+        this.clearLogStream(pcs.getErrorStream(), String.format("%s#startForLocal-error#%s", DateUtil.now(), deployModeEnum.name()));
         String appId = this.clearInfoLogStream(pcs.getInputStream(), localLog, jobRunLogId);
         int rs = pcs.waitFor();
         localLog.append("rs=").append(rs).append(SystemConstant.LINE_FEED);
@@ -179,7 +178,6 @@ public class CommandRpcClinetAdapterImpl implements CommandRpcClinetAdapter {
             throw new RuntimeException("clearInfoLogStream is error");
         } finally {
             this.close(reader, stream, "clearInfoLogStream");
-
         }
     }
 
