@@ -28,8 +28,7 @@ public class ExecuteSql {
             switch (sqlCommandCall.sqlCommand) {
                 //配置
                 case SET:
-                    Configurations.setSingleConfiguration(tEnv, sqlCommandCall.operands[0],
-                            sqlCommandCall.operands[1]);
+                    Configurations.setSingleConfiguration(tEnv, sqlCommandCall.operands[0], sqlCommandCall.operands[1]);
                     break;
                 //insert 语句
                 case INSERT_INTO:
