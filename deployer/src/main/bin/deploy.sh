@@ -27,15 +27,26 @@ echo "JAVA_HOME= ${JAVA_HOME}"
 
 ##变量设置##
 env=prod
-project=$(find "../lib" -regex ".*flink-streaming-web.*.jar")
-echo "project= $project"
 time=$(date "+%Y%m%d-%H%M%S")
+project=$(find "./lib" -regex ".*flink-streaming-web*.jar")
+if [ -f "$project" ]; then
+  echo "project= $project"
+else
+  project=$(find "../lib" -regex ".*flink-streaming-web*.jar")
+  if [ -f "$project" ]; then
+      echo "project= $project"
+  else
+      echo "project file not found"
+      exit 1
+  fi
+fi
+
 
 ##JAVA_OPTS设置
 JAVA_OPTS="-Xmx1888M -Xms1888M -Xmn1536M -XX:MaxMetaspaceSize=512M -XX:MetaspaceSize=512M -XX:+UseConcMarkSweepGC -Xdebug -Xrunjdwp:transport=dt_socket,address=9901,server=y,suspend=n  -XX:+UseCMSInitiatingOccupancyOnly -XX:CMSInitiatingOccupancyFraction=70 -Dcom.sun.management.jmxremote.port=8999 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -XX:+ExplicitGCInvokesConcurrentAndUnloadsClasses -XX:+CMSClassUnloadingEnabled -XX:+ParallelRefProcEnabled -XX:+CMSScavengeBeforeRemark -XX:ErrorFile=../logs/hs_err_pid%p.log  -XX:HeapDumpPath=../logs -XX:+HeapDumpOnOutOfMemoryError"
 
 start(){
-     echo "开始启动服务 app_name=$project "
+     echo "开始启动服务: app_name=$project "
          pid=$(ps x | grep $project  | grep -v grep | awk '{print $1}')
          echo $pid
      if [ -z $pid ]

@@ -22,9 +22,7 @@ public class SystemConstant {
 
     public static final int DEFAULT_PATTERN_FLAGS = Pattern.CASE_INSENSITIVE | Pattern.DOTALL;
 
-
-    public final static String JARVERSION = "flink-streaming-core/target/flink-streaming-core.jar";
-
+    public final static String JARVERSION = "lib/flink-streaming-core-1.1.jar";
 
     public static final String QUERY_JOBID_KEY_WORD = "job-submitted-success:";
 

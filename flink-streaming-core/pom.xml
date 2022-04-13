@@ -62,7 +62,7 @@
 
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+            <artifactId>flink-json</artifactId>
             <version>${flink.version}</version>
         </dependency>
 
@@ -103,6 +103,12 @@
 
         <dependency>
             <groupId>org.apache.flink</groupId>
+            <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.flink</groupId>
             <artifactId>flink-streaming-java_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
             <exclusions>
@@ -119,12 +125,6 @@
                     <groupId>org.scala-lang.modules</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>flink-json</artifactId>
-            <version>${flink.version}</version>
         </dependency>
 
         <dependency>
@@ -172,7 +172,6 @@
             <version>${flink.version}</version>
         </dependency>
 
-
         <!-- elasticsearch7 -->
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -190,17 +189,28 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-connector-jdbc_${scala.binary.version}</artifactId>
             <version>${flink.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.h2database</groupId>
+                    <artifactId>h2</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
         <!-- Flink modules  end -->
+
     </dependencies>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
 
         <plugins>
             <plugin>
@@ -222,8 +232,8 @@
                                 <excludes>
                                     <exclude>org.apache.flink:force-shading</exclude>
                                     <exclude>com.google.code.findbugs:jsr305</exclude>
-<!--                                    <exclude>org.slf4j:*</exclude>-->
-<!--                                    <exclude>log4j:*</exclude>-->
+                                    <!-- <exclude>org.slf4j:*</exclude>-->
+                                    <!-- <exclude>log4j:*</exclude>-->
                                 </excludes>
                             </artifactSet>
                             <filters>
