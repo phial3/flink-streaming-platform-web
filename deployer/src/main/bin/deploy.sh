@@ -28,17 +28,12 @@ echo "JAVA_HOME= ${JAVA_HOME}"
 ##变量设置##
 env=prod
 time=$(date "+%Y%m%d-%H%M%S")
-project=$(find "./lib" -regex ".*flink-streaming-web*.jar")
+project=$(find "../lib" -regex ".*flink-streaming-web.*.jar")
 if [ -f "$project" ]; then
   echo "project= $project"
 else
-  project=$(find "../lib" -regex ".*flink-streaming-web*.jar")
-  if [ -f "$project" ]; then
-      echo "project= $project"
-  else
-      echo "project file not found"
-      exit 1
-  fi
+  echo "project file not found"
+  exit 1
 fi
 
 
